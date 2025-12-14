@@ -1,0 +1,365 @@
+# Write a function to find out the max of 2 number.
+    scala> def max(num1:Int,num2:Int):Int={
+                if(num1>num2) return num1
+                else return num2
+            }
+
+            def max(num1: Int, num2: Int): Int
+
+Note: max is the function name, that takes 2 parameter num1 and num 2 which are of Int type.
+After method parameter we wrote :Int which specifies the return type of the method.
+= is used as a separator between function parameters and function body.
+def max(num1:Int,num2:Int):Int comes under function parameter
+
+
+1.Scala is static Type Language:
+The Scala compiler does not infer method parameter, which mean you must define the
+datatype of the parameter of function. Scala won't do it for you.
+
+2.Function parameter are always constant
+The function parameters are always constant and you cannot change the value of it.
+
+3.Is the return keyword necessary?
+No, the function could be re-written as below. Please note we removed the return keyword.
+
+4.The last statement will be returned back.
+
+5. Is the return type necessary?
+No, If the method body has sufficient expression to make the Compiler understand, defining
+the return type is not necessary. In the below example we are either returning num1 or num2
+which are of Int type. So, it helps the compiler to auto discover the return type.
+
+6.Do we need to specify return type in the function definition, If the body has return keyword?
+Yes. In case your body has a return keyword, then you must specify the return type in the
+  function definition.
+
+
+
+In Scala 3, the below function would return you Matchable
+
+def max(num1:Int,num2:Int)={
+if(num]>num2) num1
+else "Hello"
+
+def max(num1: Int, num2: Int): Matchable //in scala 3.0
+
+def max(num1: Int, num2: Int): Int | String //in scala 3.4.0
+
+scala > max(5,10)
+val res2: Int | String
+
+scala > max(10,5)
+val res3: Int | String = 10
+
+scala > val result = max(10,5)
+val result: Int | String = 10
+
+scala > result.asinstanceOf[Int]
+val res9: Int = 10
+
+scala > result.isinstanceOf[Int]
+val res5: Boolean = true
+
+
+The Matchable Trait is newly introduced in Scala 3, that can be used in Pattern matching.
+Let's look into the API documentation for more details.
+
+
+8. Is parenthesis necessary while defining a method.
+No. If the expression is a single line expression.
+
+scala> def max(num1:Int,num2:Int)= if(num1>num2) num1 //Scala 2.x
+max: (num1: Int, num2: Int)AnyVal
+
+scala> def max(num1:Int,num2:Int)= if(num1>num2) num1 //Scala 3.x
+def max(num1: Int, num2: Int): Unit
+
+scala > def max(num1:Int,num2:Int)= if(num1>num2) num1 else num2
+def max: (num1: Int, num2: Int) Int
+
+# Write a function that takes no input and produces no output and just prints hello scala
+
+scala> def greet() = println ("Hello, Scala!" )
+def greet: ()Unit
+
+Calling a function with one parameter
+
+In case you have a method that takes only one parameter, then () is optional.
+
+scala > println "Hello" //Error, You must write the class name too.
+scala> Console println "Hello" //Hello
+
+Console is a class, println is a static method which just takes 1-parameter, so surrounding it by
+() is optional.
+
+scala> square 5 //wont work as square() is not inside any class.
+
+
+# Function with Dynamic number of Parameters (varargs- variable arguments)
+
+Create a method that takes variable parameter of Int type.
+
+def sum(numbers: Int*) ={
+println(numbers.getClass.getName) // scala.collection.immutable.ArraySeq$ofInt
+val sum=numbers.reduceL+_)
+println(numbers)
+sum
+}
+sum: (numbers: Int*) Int
+
+scala> sum(5)        //5
+scala.collection.immutable.ArraySeqSofInt
+ArraySeq(5)
+
+scala> sum (5,10) //15
+scala> sum(5,10,20) //35
+
+Now say you have a List of Int
+
+scala> val numList=List(5, 10, 20)
+numlist: List[Int] = List(5, 10, 20)
+
+Let's try calling sum by passing the list.
+
+scala> sum(numList*)
+scala.collection.immutable.$colon$colon
+List(5, 10, 20)
+val res11: Int = 35
+
+# Calling var-args with no parameter
+
+You can call the function with var-args with no parameter.
+
+def sum (numbers: Int*) ={
+    println(numbers.getClass.getName) // scala.collection.immutable.ArraySeq$ of Int
+    numbers.sum
+}
+
+scala> sum()
+val res3: Int= 0
+
+# Dynamic parameters with more parameters
+
+In case you wish to have var-args and other parameters, You must first have individual
+parameters followed by variable args parameter.
+
+def sum(num1:Int,num2:Int, numbers: Int*) =
+{ num1+num2+numbers.sum
+}
+
+scala> sum (1,2,3, 4,5) //15
+
+scala> sum(1,2) // You need to pass at least the first 2 parameters.
+val res1: Int = 3
+
+scala> val list=List(3,4,5)
+
+scala> sum (1,2,list: _*) //scala 2
+val res4: Int = 15
+
+scala> sum (1,2,list*) //Scala 3.x
+val res4: Int = 15
+
+scala> total(mark2=10,mark1=20, mark3=40)
+mark1=20 mark2=10 mark3=40
+val res7: Int = 70
+
+scala> total(mark2=10,mark1=20,40)
+mark1=20 mark2=10 mark3=40
+val res8: Int = 70
+
+# Lazy variables
+
+def is used to define a function. However, you might also see the code like this.
+
+scala> def x=10
+def x: Int        //x was initialized to res0 and then its value got printed. Lazy
+scala> x          //x value did not get printed
+initialization
+res0: Int = 10
+
+In the above example, x is really not a variable, it is a function name which does not take any
+input and hence no () and it returns 10. Hence in the very first line it did not get printed. It gets
+printed only when you call it in the next line.
+
+scala> def x=10
+x: Int
+
+scala> def x={10}
+x: Int
+
+scala> def x:Int={return 10}
+x: Int
+
+# Function without Side Effect ?
+
+Assume you have a method, that does not return you any value, but it prints the output on the
+console. These kinds of functions are called Functions without side effect.
+Example:
+
+def printVal (x:Int,y:Int):Unit={
+println(s"$x $y");
+}
+Note: The above function will be of no use, other than for printing. How do we test this method
+using automation?
+
+# Function with Side effect?
+Assume there is a function which takes 0 or more input. Let's say this method return/does not
+return any value. But this method is silently updating the value of other variable. This method is
+called function with side effect.
+
+var total =0
+
+def printVal (x:Int,y:Int):String={
+total=x+y
+"Hello World"
+}
+
+printVal(10,20) //Hello World
+total //30
+
+
+Consider this example. We have a printVal function that takes 2 input. It is updating the value of
+total which is a global variable. And then does something else and finally returns Hello World.
+This function is called function with side effect. And you should really avoid this.
+
+
+# Procedures:
+
+The function that does not return anything (i.e., Unit) is called Procedure.
+Any function that ends with a statement such as println() call is also a procedure.
+If you have a function without explicit return type that ends with a statement which returns
+nothing, the scala compiler will inject Unit as the return type indicating no value.
+In case you are writing a procedure that is long, you can use Unit as return type to indicate you
+don't have any return type.
+
+scala> def greet(name:String)= printf(s"Hello $name" )
+greet: (name: String)Unit
+
+This is a procedure because it is not going to return any value. Even if you have not defined any
+return type, Scala compiler understands it as Unit.
+
+# Conclusion:
+
+If You define the function with parenthesis,
+    you can call it with just name as well as name() in scala 2.x
+    You can call it with parenthesis only in scala 3.x
+
+If You define the function without parenthesis, you can call it just with name.
+
+# Function Invocation with Expression Block -
+
+# Define a function that takes an average and tell you if you have Passed or Failed the exam.
+def getResult(avg:Float)={println(avg); if (avg>=60)"Pass"; else "Fail"}
+
+# Change your mind set from imperative coding to functional coding:
+- Most Important rule, try to avoid var as much as possible and use val wherever possible. This
+helps you to move towards functional coding.
+- Always prefer immutable Objects
+- Always prefer function without side effects
+
+
+## Return keyword is necessary sometime
+Let's understand the below linear search algorithm
+
+object Linear Search {
+    def main(args: Array[String]): Unit ={
+        val arr=Array(3,7,8, 11,13,17,21)
+        val pos= search(arr, 17)
+        pos match{
+            case -1=> println ("Element not Found")
+            case p=> println(s"Element Found at Index $p")
+        }
+    }
+    def search(arr: Array[Int], element: Int):Int={
+        for(i<- 0 until arr.length) // 0 to 6(not 7)
+        {   println (s"i = $i")
+            if(arr(i)==element)
+            {
+              return i //if you don't use return keyword, then it does not return to the caller and executes the next iteration and
+            }
+        }
+        println("Not found")
+        -1
+     }
+}
+
+-- What if you remove return keyword?
+In that case the method does not return back and it will go for next iteration and finally - 1 is
+returned which causes Element not found to be printed.
+
+   def searchWoReturn(arr: Array[Int], element: Int):Int = {
+       for (i <- 0 until arr.length) // 0 to 6(not 7)
+       {
+         println(s"i = $i")
+         if (arr(i) == element) {
+           i
+         }
+       }
+       println("Not found")
+       -1
+     }
+    val arr=Array(3,7,8,11,13,17,21)
+    val pos= search(arr, 17)
+
+## Conclusion of Return Keyword:
+If you wish your method to return from the middle during iteration, you should
+explicitly use return keyword.
+And Since you are using the return keyword, You should also declare the return type in the method signature.
+
+# Function within a package:
+- scala.math is package which contains methods for performing basic numeric operations such as
+elementary exponential, logarithmic, root and trigonometric functions.
+- All methods forward to java.lang.Math unless otherwise noted.
+
+
+- It is also possible to reassign this method to a variable.
+
+scala>val f = scala.math.floor _  //2.x //1 _ because the method takes one parameter
+val f: Double => Double = Lambda$1580/2106643654@453fcce2
+
+scala>val f = scala.math.floor  //3.x //1 _ because the method takes one parameter
+val f: Double => Double = Lambda$1580/2106643654@453fcce2
+
+scala>val f = scala.math.floor (_)
+
+The above technique is called Partial applied function because we have not specified the
+argument for the floor()
+
+Let's invoke the method using f
+
+scala>f (5.3)
+res41: Double = 5.0
+
+scala>val result=f(5.3)
+res41: Double = 5.0
+
+//Here result is a variable to hold the value, and f is the variable to hold the function.
+
+scala>val list= List(3.2,4.5,7.8)
+list: List [Double] = List (3.2, 4. 5, 7.8)
+
+scala>list.map(f) //applying floor function to each element in the map
+res42: List[Double] = List (3.0, 4.0, 5.0, 7.0}
+
+
+- Assigning a function with 2 parameters to a variable.
+Consider the below method
+    scala> val power = scala.math.pow( _)
+power: (Double, Double) => Double = $$Lambda$1292/921640333@4ac4bf1
+
+Note: We use def to define a method, val, to create a function
+
+Here we assigned the pow method to a variable called power. Now lets call the method
+
+scala> power (5,2)
+
+res45: Double = 25.0
+
+
+
+
+
+
+
+

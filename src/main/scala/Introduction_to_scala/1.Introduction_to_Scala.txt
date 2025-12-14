@@ -1,0 +1,122 @@
+# Top 3 Programming Language
+- Java - Developed by James Gosling in May 23"', 1995
+- Scala - Developed by Martin Odersky in Jan 20th, 2004
+- Python - Developed by Guido van Rossum in Feb, 1991
+
+#Scala :
+Creator : Martin Odersky
+Created Date : January 20, 2004
+
+# Highlights:
+- The name Scala stands for "scalable language. "
+- The language is so named because it was designed to grow with the demands of its users.
+  You can apply Scala to a wide range of programming tasks, from writing
+  small scripts to building large systems.
+- It runs on the standard Java platform and interoperates seamlessly with all Java
+libraries.
+
+
+# Scala Vs Java In nutshell
+
+1. Pure Object Oriented
+While Java is not pure Object-Oriented language because of primitive data
+types, Scala is completely pure object-oriented language as it does not have
+any primitive types.
+
+2. Supports both imperative and functional style.
+Let's understand using example.
+
+-Imperative style in Java
+public static int findMax(List temperatures)
+{
+    int highTemperature = Integer.MIN_VALUE;
+    for (int temperature: temperatures)
+        {
+        highTemperature = Math.ma(highTemperature, temperature);
+    }
+        return highTemperature;
+}
+
+
+- Functional style in Scala
+ def findMax(temperatures : List[Int]} =
+{  temperatures.foldLeft(Integer.MIN_VALUE) {Math.max}
+ }
+
+
+
+3. Operators are also a function
+Scala is an object-oriented language in pure form: every value is an object
+and every operation is a method call. For example, when you say 1 + 2 in
+Scala, you are actually invoking a method named + defined in class Int.
+
+4. Scala is static typed language
+
+JAVA and Scala both are static typed language.
+It means we know its type upfront during the compilation itself and it
+doesnot changes dynamically in the runtime.
+
+
+5. Strong, Inferred
+
+Scala is a strongly type language, which means datatype is checked before
+performing operation.
+val result="a"+ b; //It checks the datatype of a and b before performing
+operations.
+Inferred means it is smart enough to understand the resultant datatype.
+Scala can be mixed with the java library and you can build an entire
+enterprise solution based on Scala.
+
+6. Semicolon, Parenthesis are optional
+
+While writing scala code, it is optional to end the statement with ;
+However if 2 different statements are written in same line we must use ; as
+a separator
+Similarly based on the context dot, and parenthesis can be optional
+sl.equals(s2) can be written as s1 equals s2
+7. Operator Overloading is allowed
+
+In Java, only + was overloaded, but in Scala you can have your own
+operator overloaded.
+
+8. Functional Programming
+
+Java is treated as Object Oriented Programming language, but Scala goes
+extra mile.
+Scala is a combination of object-oriented and functional programming
+concepts in a statically typed language.
+As a programmer you have flexibility to write code as per your style.
+
+
+9. Traits
+Traits are like interfaces in Java, but they can also have method
+implementations and even fields. Objects are constructed by mixin
+composition, which takes the members of a class and adds the members of
+a number of traits to them. Unlike a class, a trait can add some new
+functionality to an unspecified superclass. This makes traits more
+"pluggable" than classes. In particular, it avoids the classical "diamond
+inheritance" problems of multiple inheritance, which arise when the same
+class is inherited via several different paths.
+
+10. Easy programming to Multithreading
+
+Remember the painful time, when learning multithreading in Java was a
+nightmare. With Scala it really does not demand you to concentrate on
+locks and synchronization. Scala provides you action based message passing
+model that can deal with concurrency. Scala has event-based concurrency
+model.
+
+11. Can use Java classes in Scala and vice-versa.
+
+You can use Java classes in your Scala program and hence take the
+advantage of any libraries that you wish to include in your programming
+requirement. Vice versa is also possible.
+
+
+
+
+Scala Does not support below few things.
+1. public Keyword- default is public, unlike no-access in java.
+2. static keyword - singleton
+3. break keyword - we have break as a function
+4. throws keyword- We have @Throws annotations

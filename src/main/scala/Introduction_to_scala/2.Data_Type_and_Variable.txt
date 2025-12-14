@@ -1,0 +1,265 @@
+Scala does not have primitive data types.
+We will be using classes like Boolean, Byte etc to represent the data type.
+They have same memory structure as of Java, since they get converted to java data type
+behind the scene.
+
+# Variables:
+They are reserved memory allocation for storing values. In Scala we use var and val to
+represent the memory allocation.
+var is for variable
+val is for value(constant)
+
+    int x =10;     //Java
+    scala>val x=10    //x is a constant, its value cannot be changed again.
+    scala>var y=20     //x can be reassigned
+    scala>val z:Int =30
+
+Always prefer to use val (constant) over a variable.
+
+Variables are of 3 types
+1. Field variable
+2. Local variable
+3. Method parameter variable
+
+1.Field variable/Class variable/Object Variable
+• Also called as Object variable or Instance variable.
+•They are accessible from inside of every method of the Object.
+• It could be access from outside of every method depending on the modifier applied over
+it.
+• Object fields can be both mutable and immutable and can be defined using var or val.
+
+2.Local Variable
+• They are defined inside a method or a block.
+• They are accessible only within that method where it is defined.
+• However, if you return the variable from method to the caller, then its value is passed
+outside.
+• It can be both mutable and immutable and can be defined using var or val.
+
+3. Method parameter variable
+• The variable used in the method parameter are called method parameter variable.
+• They have the scope within the method only.
+• All the method parameter variables are constant and hence it cannot be changed.
+
+
+# Variables and expression.
+You can write the expression block where your logic will be executed and the final output
+will be assigned to the val.
+
+
+# Tuple: It is a class that can be used to hold collection of different types.
+In scala 2 we have Tuple to Tuple22.
+You can hold 3 elements in Tuple3.
+Hence you can hold N elements in TupleN where n<=22.
+
+# Recommendation:
+
+Always prefer using camel-Case while naming variables in Scala as well as Java.
+Eg: numberOfEmployees
+
+Please avoid python style of naming.
+Eg: number _of_employees //python style.
+
+# Difference between & and &&
+&& and || are lazy operators or short circuit operators. Means they will not bother
+evaluating the 20* argument if 1 argument is sufficient to drive the result.
+
+In || if 1st condition is True, then 2nd condition will not be evaluated. (ie short circuit)
+In && if 1s condition is False, then 2nd condition will not be evaluated(ie short circuit)
+
+The logical & and | will have both the condition evaluated.
+
+Note: You cannot convert other datatypes to Boolean. You need to write expression in order
+to get the result.
+
+
+#Type Inferencing:
+
+The ability to determine the datatype based on the value is called as type inferencing.
+Always prefer using type inferencing instead of explicit typing since it makes the code short.
+However, you can use explicit type when you want to make sure your intended data type is
+assigned.
+
+# What is the difference between toByte and asInstanceOf
+1. There are many toXXx) which can be used to convert data from one type to another type.
+2. asinstanceOf is a method which is present in Any class and is used to type caste any object to
+other compatible object.
+3. If you provide any 2-incompatible type, it will throw you ClassCast Exception.
+4. Avoid asinstanceOf and prefer toXXX,whenever possible because asinstanceOf throws Error if
+there are class mismatch.
+5. toXXX() can be used only in those objects whose class contains such method.
+
+
+
+# Comparing Double and Float
+Can you tell me why the first output is false and 20d output is true
+
+scala> val i=5.2f
+val i: Float = 5.2
+
+scala> val j=5.2
+val j: Double = 5.2
+
+scala> i==j
+val res 15: Boolean = false
+
+scala> val i=5.25f
+val i: Float = 5.25
+
+scala> val j=5.25
+val j: Double = 5.25
+
+scala> i==j
+val res16: Boolean = true
+
+
+# How to compare it effectively?
+
+scala > val num1=BigDecimal (5.25)
+val num1: BigDecimal = 5.25
+
+scala> val num2=BigDecimal (5.25f)
+val num2: BigDecimal = 5.25
+
+scala> num1.equals(num2)
+val res19: Boolean = true
+
+scala> val num1=BigDecimal (5.26)
+val numl: BigDecimal = 5.26
+
+scala> val num2=BigDecimal (5.26f)
+val num2: BigDecimal = 5.260000228881836
+
+scala> num1.equals(num2)
+val res20: Boolean = false
+
+scala> num1.toFloat.equals(num2.toFloat)
+val res38: Boolean = true
+
+scala> num1.toDouble.equals(num2.toDouble)
+val res39: Boolean = false
+
+scala> num1.toDouble
+val res40: Double = 5.26
+
+scala> num2.toDouble //Since it was actually Float while defining, it has 5.26
+val res41: Double = 5.260000228881836 //And converting it to Double does not bring more values.
+
+# Unit:
+This type represents lack of data. It is similar to void in java. If you write a function that does
+not return any value, you would specify the return type as Unit.
+The Unit literal is empty pair of parentheses (), which is a representation of not having any
+value. If you want you can define a value of Unit type but it's basically used in functions and
+expressions.
+
+
+# Match Expression
+It is similar to java switch statement. Similar to java it has a default or catch-all pattern.
+In java switch, it tries to match one pattern and then you can have fall through (without
+writing the break). We don't have such fall through in Scala.
+Java Switch is limited by matching the value, Scala supports matching items like types,
+regular expression, numeric ranges and data structure.
+
+val day="MONDAY"
+
+val result=day match{
+case "MON" | "TUE" | "WED" | "THUR" | "FRI"  => "weekday"
+case "SAT" | "SUN" => "Weekend"
+case other =>s"Not a valid weekday $other"
+}
+
+#if condition
+ In scala we have the below if conditions
+ if
+ if ... else ...
+ if ... else if ... else ... This is not there, But still we can write this.
+
+ The below code will be treated as
+ if (cond 1)
+ {
+    statement1
+ }
+ else
+ {
+     if (cond 2)
+     {
+     statement 2
+     }
+     else
+     {
+         if (cond 3)
+         {
+            statement 3
+         }
+         else
+         {
+            statement 4
+         }
+     }
+ }
+
+ So if else if was converted to if .. else ( if...}
+
+# Keywords and Operators
+# https://dotty.epfl.ch/docs/internals/syntax.html
+
+- Note:
+1.There is no public keyword in Scala
+2.There is no throws keyword in Scala but we have @throws annotations
+3.There is no break keyword in Scala but we have break as a function
+4.There is no static keyword in Scala as we have concept of Object which is Singleton
+5.There is no ++ and -- operators in Scala
+6.do while loop is dropped in Scala 3.x, However do and while are still keywords. do is used in
+condition and while loop still exists.
+7. _ (underscore) is used in many places like function literals, import, place holder
+8. : is used as a separator between variable Name and variable type. Eg; val x: Int = 10
+9. => Used in functions as separator between function and its body. We saw in case
+10. <- used in loops. Eg for( num<-numArr)0
+11. <: used in abstract and parameterized type declaration.
+12. >: used in abstract and parameterized type declaration.
+13. <% Used in abstract and parameterized type view bounds declarations.
+14. @ for annotation
+
+#Operators:
+All operators are actually a method. Below tables shows the list of operators.
+
+Operators Name              Operators
+Arithmetic                   +,;*,/,%
+Relational                   <, >, <=, >=,!
+Equality                     ==, !=
+Logical (Short Circuit)      &&, ||
+Bit wise                     &, |, ^, ~
+
+
+Operators are of 3 types
+
+1. Infix
+2. Prefix
+3. postfix
+
+Infix is a binary operator whereas Prefix and postfix both are unary operator
+
+# Infix:
+An operator is called infix if it sits in between of 2 arguments. Example in the below code + is a
+infix operator as it sits in the middle of 2 arguments.
+
+Examples:
+var sum=1+2
+
+var msg="Hello World"
+msg.substring(4)
+
+msg substring 4
+
+
+# Prefix
+In Prefix, we put the method name before the object on which we are invoking the method.
+  Examples:
+
+    var number= -10
+
+    var flag = !true
+
+
+# Postfix
+  In Postfix, we put the method name after the object. Postfix should not take any parameter
+  otherwise it becomes infix.

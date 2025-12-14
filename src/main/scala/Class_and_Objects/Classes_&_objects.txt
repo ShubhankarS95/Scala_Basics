@@ -1,0 +1,180 @@
+In Object Oriented Programming language, we basically work with Classes and Objects.
+Classes are basically container and prototype of the object.
+You can create the class in Scala using class keyword.
+It is possible to create a class without any property. It will not have any use in the real time.
+
+Creating a class without any property
+scala> class Demo
+//defined class Demo
+
+Let's define a class with properties.
+scala> class Demo {
+    val num1 = 0
+    val num2 = 0
+    private val num3 = 0
+    def add(n: Int) = num1 +num2 + n
+// defined class Demo
+
+Note:
+- num1, num2, num3 are Instance variable.
+- num3 is defined private, that means it is not accessible from outside of the class.
+
+The default access specifier in Scala in public, but in java the default access specifier is default/no-
+access.
+
+
+But in Scala all the Instance variables (where you have not defined the type) should be initialized
+with some values even it you don't use it.
+Otherwise you will have to define the type, so that scala can auto inject the default value based on
+the type.
+Otherwise, scala will fail to understand what to inject.
+
+var num1:Int=_ //Works with a warning.
+var num1: Int = 0
+_ is a placeholder which will be filled up with the default value of numi.
+
+The below code however will not work. Keep it inside the class and try to compile the code.
+
+var num1:Int
+class Demo needs to be abstract, since var num1: Int in class Demo is not defined
+
+(Note that variables need to be initialized to be defined)
+
+Note: You cannot use _ concept with the val, As the value is constant and you should assign some
+value to it, even if the value is 0. It gives you run time error. No compilation issues.
+
+# _ initialization is deprecated.
+
+Solution:
+
+import scala.compil etime.uninitialized
+var numi:int= uninitialized
+
+# Object:
+
+scala> class Demo {
+    var num 1 = 0
+    var num2 = 0
+    private var nums = 0
+def add(n: Int) = num1 +num2+ n
+}
+scala> var d1=new Demo
+d1: Demo = Demo@600b0b7
+scala> var d2=new Demo()
+d2: Demo = Demo@2d35442b   //By default empty constructor would be present.
+
+Note:
+d1,d2 are 2 different instances of the Demo class and hence 2 different hashCode
+Using d1 object, we can access num1, num2 variables as they are public
+but we cannot access num3 as it is private
+We called add (40), which added 40+10+20= 70
+All the method parameters are by default val in scala and not var, and hence you cannot reassign the
+value to it.
+
+# Saving the source code
+Consider the below code save as Demo scala
+
+class Demo{
+    var name="Suraz"
+}
+If You compile the code, it will create Demo.class file
+
+>scalac Demo.scala
+
+# Change your class name to Test but save it as Demo.scala
+Demo.scala
+class Test{
+    var name="Suraz"
+}
+
+When you compile the above class, It will create Test.class and not Demo.class
+
+# Recap:
+Scala files are compiled using filename where as .class files are generated using class name
+
+Can we execute the above classes?
+
+The above class cannot be executed. We need to define a main method to make this program run.
+However, if you add main method in the above class. It will not be static and JVM needs public static
+main.
+Scala does not contain static keyword; hence you cannot really make the main method, static in the
+above class.
+Solution:
+You need to create a separate object where you can define the main method as shown below.
+
+Demo.scala
+class Test{
+var name="Suraz"
+}
+object TestClient{
+    def main(args: Array[String])={
+        val t= new Test
+        printin(t.name)
+    }
+}
+
+Note: Although the file is saved as Demo.scala, It will generate 3 files while compiling
+Test.class TestClient.class TestClientS.class
+
+# How do we make the main) static? Do we have a static keyword in scala?
+No. We don't have any static keyword in scala.
+In order to make the method static you need to change the declaration of class to object.
+So, what exactly is an object.
+ You can think of object as a class, which has all static methods like utility class in java. Since
+  everything is treated as a static method, you don't need to create the object of static class and hence it
+  is not allowed in scala.
+
+Change the class to object and rerun the code
+
+object HelloScala{
+    def main (args: Array[String])={
+    println("Hello Scala")
+}
+}
+cmd>scalac HelloScala.scala
+cmd>scala HelloScala
+Hello Scala
+
+# What is a Singleton?
+Singleton Object:
+Scala classes does not have a direct support of static keyword, which means programmer cannot
+define static variable and methods.
+Instead Scala has something called object which is Singleton. Since object is Singleton, Programmer
+cannot create the Object of singleton using new keyword.
+A singleton object is declared by using object keyword instead of a class.
+
+Methods and variable declared inside Singleton Object are accessible globally using the object name
+just like static variable and methods in Java.
+
+scala > class Demo{
+var name="Suraj"
+def sayHello()={println(s"Hello ${name}")}
+}
+
+defined class Demo
+The above declaration is a class declaration. Let's create the Object of Demo class and call the
+method.
+
+scala> val d = new Demo()
+d: Demo = Demo@78e17a99
+
+scala> d.sayHello() //cannot call using d.sayHello, since while defining the method, you wrote with
+Hello Suraj
+scala > d.name="Scala"
+d.name: String = Scala
+
+scala > d.sayHello()
+Hello Scala
+
+
+
+
+
+
+
+
+
+
+
+
+
