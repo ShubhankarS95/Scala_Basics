@@ -124,7 +124,7 @@ scala> num1.equals(num2)
 val res19: Boolean = true
 
 scala> val num1=BigDecimal (5.26)
-val numl: BigDecimal = 5.26
+val num1: BigDecimal = 5.26
 
 scala> val num2=BigDecimal (5.26f)
 val num2: BigDecimal = 5.260000228881836

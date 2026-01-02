@@ -1,0 +1,544 @@
+Strings
+
+String in Scala is internally java.lang. String so we can use all the methods given in java String
+
+Why equals and == methods are returning true?
+
+In Scala String, == and equals) is same, and they check the content not the Object reference
+When you use msg1== msg2, it first checks if msg1 or msg2 is not null. In case both of them are
+not null, then it internally calls equals (). However, if you directly call equals) then it does not
+check for null.
+
+Note: == method is given in Any class but it reimplements in AnyRef to do the below thing.
+
+== is a method available in AnyRef class, that first checks for null and then uses equals () for
+content comparing.
+
+# Creating a Null String
+
+scala> var msg:String =null
+scala> var msg:String =_
+msg: String = null
+
+scala> msg.length
+java.lang.NullPointerException
+
+scala> var msg=null //msg is of Null type
+msg: Null = null
+scala> val s1: String=null
+
+Note: prefer using None/Some/Option over null wherever you want to defined a null variable.
+
+Assignment: Write a function that takes an int and returns You 5 characters String
+123
+-> 00123
+1
+-> 00001
+12345 > 12345
+123456-> 12345
+-> 00000
+-ve number -> 00000
+def get5CharacterString(num:Int):String=(
+// Your code here.
+}
+
+
+# Solution 1: Make all the String starting from Left Hand side.
+scala> val foo = """This
+is
+multiline
+String"""
+
+# Solution 2: Use default multiline splitter (|).
+
+val msg = """This is
+a multiline
+String""".stripMargin
+
+Use customized Splitter
+
+val msg ="""This is
+#a multiline
+#String""".stripMargin('#')
+
+# Convert Multiline String to single line string
+
+scala> println(msg)
+This is
+a multiline
+String
+
+scala> val msg2 = msg.replaceAll("\n"," ")
+res4: String = This is a multiline String
+
+# foreach and map
+scala> val arr=Array(1,2,3,4,5)
+arr.foreach(element=> println(element*2)) //Iterates and Prints double.Does not return 2, 4, 6, 8, 10
+
+val double= arr.map(element=>element*2) // Returns the double for each element
+double: Array(Int] = Array (2, 4, 6, 8, 10)
+
+# Converting Valid String to int
+scala> var age="10"
+var age: String = 10
+
+scala> age.toInt
+val res9: Int = 10
+
+scala>Integer.parseInt(age)
+val res 10: Int = 10 //Java Style
+
+scala> age.asInstanceOf[Int]
+java.lang.ClassCastException: java.lang.String cannot be cast to java.lang.integer
+
+# Why did we get the below error?
+java.lang.String cannot be cast to java.lang.Integer
+Because String and Integer are not a parent child in any way and converting them using
+asInstanceOf is not possible.
+
+# Splitting
+scala> val marks="maths 96,eng 95, science 54"
+marks: String = maths 96,eng 95, science 54
+
+scala> val markSub= marks.split(",")   //Array of String
+markSub: Array[String] = Array(maths 96, eng 95, science 54)
+
+scala> markSub.map(ms=>ms.split(" ")(1)) //Map returning Array(String)
+res7: Array|String) = Array (96, 95, 54)
+
+scala> markSub-map(ms=>(ms.split(" ")(1).asInstanceOf[Int] ))
+java.lang.ClassCastException: java.lang.String cannot be cast to java.lang.Integer
+
+scala> val markArr= markSub.map(ms=>{ms.split(" ")(1).toInt } )
+markArr: Array[Int] = Array(96, 95, 54)
+
+scala> val totalMarks=markArr.sum
+total Marks: Int = 245
+
+scala> val total Subject = markArr.size
+totalSubject: Int = 3
+
+# Average:
+
+scala> val avg = totalMarks/totalSubject.toFloat
+avg: Float = 81.666664
+
+# Substring
+String has substring and slice function that can be used to get substring out of the string.
+
+scala> val msg= "Hello World"
+val msg: String = Hello World
+
+scala> msg.substring(0,3) //start is inclusive, end is exclusive, starts from 0 goes till 2.
+val res5: String = Hel
+
+scala> msg.slice(0,3)
+val res6: String = Hel
+
+# C Style Formatting:
+Scala allows us to use C Style of formatting.
+
+%d - for integers
+%f - for floats and doubles.
+%c - Character
+%s - String
+
+scala> val msg="%c for %s"
+val msg: String = %c for %s
+
+scala> msg.format(ch, word)
+val res8: String = A for Apple
+
+scala> "%c for %s".format('A', "Apple" )
+val res19: String = A for Apple
+
+# More Formatting
+scala> "%d".format(50) //d,1d, 2d will give you same output.
+val res 14: String = 50
+
+scala > "%1d".format(5000)
+val res25: String = 5000
+
+scala > "%10d".format(5000)
+val res 26: String = "5000"
+
+scala> "%07d".format .format(5000)
+val res25: String = 0005000
+
+scala> "%f".format(5000f)
+val res34: String = 5000.000000
+
+scala> "%50f".format(5000f)
+val res38: String = "                                       5000.000000"
+
+scala > "%11f".format(5000f)
+val res41: String = 5000.000000
+
+scala > "%12f".format(5000f)
+val res40: String = " 5000.000000"
+
+scala> "%f".format(3.2f)
+val res44: String = 3.200000
+
+scala> "%.2f".format(3.2f)
+val res45: String = 3.20
+
+scala> "%.3f".format(3.2f)
+val res46: String = 3.200
+
+# String Interpolation:
+This concept was introduced in 2.10 version.
+It is a technique using which you can embed variable values directly in the String.
+It helps you to write the String more expressively.
+
+It is of 3 types:
+1. s interpolation
+2. f interpolation
+3. raw interpolation
+
+It can be applied to evaluate and express the value of
+1. Variables
+2. Expressions
+3. Object fields
+
+s interpolation
+In typical java program you will use + a lot to append the value of a variable in a String.
+As shown below.
+
+val mark1=10
+val mark2=20
+println("The sum of "+mark1 +" & " +mark2 +"= "+(mark1+mark2))
+println(s"The sum of $mark1 & $mark2 = ${mark1+mark2}")
+
+Note: How the first expression is hard to express and read as compared to 2nd One. You need
+braces where you are trying to evaluate an expression, with in the string.
+Expression should be any operation as well as it could be an object value
+e.g; $(emp.name} where emp is object of Employee and name is the property of it.
+
+scala> println(s""'"Hello $name Your age= Sage and \n salary is ${sal}O""")
+Hello suraj Your age= 29 and
+salary is 5000.00
+
+Note: In is escaped because of s (string interpolation),
+
+scala > println("'"'Hello $name Your age=$age and \n salary is ${sal}"™*)
+Hello $name Your age= Sage and In salary is ${sal}O
+
+Removes and You will see the values would not be evaluated as well as In would not be
+evaluated.
+
+
+# What if you want to print $ in the message
+Use $$ to print $ one time.
+
+scala> println(" Hello $")
+Hello $
+
+scala> println(s"Hello $") //unclosed string literal
+scala> println(s"Hello $$")
+Hello $
+
+scala> println(s"Hello $name Your age= $age and salary is $$$sal")//2$ prints prints $
+Hello suraj Your age= 29 and salary is $5000.0    //3rd $ is to print value
+
+# f interpolation
+It is used to format the number to some decimal precision. All expression enclosed with $ will
+be evaluated as in String interpolation.
+
+scala> val pi=scala.math.Pi
+pi: Double = 3.141592653589793
+
+scala> println(f"Pl = $pi%.3f")
+PI = 3.142
+
+//Only 3 Decimal point, Round off Third position if required
+
+scala> println(f" Pl = $pi%.Of")
+PI = 3
+
+scala > println(s"P| = $pi%.3f")
+PI = 3.141592653589793%.3f
+
+# f can also work with String as shown below.
+scala > val v= "apple"
+v: String = apple
+
+scala> f"I have 3 $v%.3s with me" //get 3 characters from the String
+res27: String = I have 3 app with me
+
+scala> f"I have 3 $v%.5s with me" //get 5 characters from the String
+res27: String = I have 3 apple with me
+
+scala> f"I have 3 $v%,100s with me" //get 100 characters (if possible) from the String
+res27: String = I have 3 apple with me
+
+scala> f"I have 3 $v%5.5s with me" //The length should be 5, and there should be 5 character
+val res68: String = I have 3 apple with me
+
+scala> f"I have 3 $v%10.5s with me" //Length should be 10, and must have 5 character
+val res69: String = I have 3 apple with me
+
+scala> f"I have 3 $v%10.3s with me" //Length should be 10, but 3 characters
+val res70: String = I have 3 app with me
+
+scala> f"I have 3 $v%010.3s with me" //Trying to fill the padding with zero, Error
+java.util. FormatFlagsConversionMismatchException: Conversion = s, Flags = 0
+
+# raw interpolation
+This helps you to deal with escaped characters as unprocessed string.
+Example how do you display \n as it is in the String expression.
+
+scala> val num=10
+
+scala > println(s"Hello \n World $num")  //Interprets \n as new line
+Hello
+World 10
+
+scala> println("http:\\www.onlinelearningcenter.in\newStudent\bookSlot")
+http:\\www.onlinelearningcenter.in
+ewStudenookSlot
+
+scala> println("http:\\\\www.onlinelearningcenter.in\\newStudent\\bookSlot")
+http://www.onlinelearningcenter.in\newStudent\bookSlot
+
+scala> println(raw"http:\\www.onlinelearningcenter.in\newStudent\bookSlot")
+http:\\www.onlinelearningcenter.in\newStudent\bookSlot
+
+
+# Processing String character by character
+Given a string of character convert all of them to upper case, character by character
+
+scala> val msg="hello World"
+msg: String = hello World
+
+scala> msg.toUpperCase //In a single go
+res 19: String = HELLO WORLD
+
+# Now character by character:
+
+scala > msg.foreach(c=>print(c.toUpper))
+HELLO WORLD
+
+scala> var msgUpper=msg-map(_toUpper) //map returns you data, foreach doesnot
+msgUpper: String = HELLO WORLD
+
+# Read character by character in reverse
+
+scala> for(c<-msg.reverse) print(c)
+dlrow olleh
+
+scala> msg.reverse.foreach(c=> print(c))
+scala> msg.reverse.foreach(print)
+
+# Assignment:
+Write a program to reverse a String without using reverse method
+
+# Remove L from the message
+scala> msg.filter(_|='I').map(_toUpper)
+res29: String = HEO WORD
+
+
+#Even or Odd
+
+scala> val numList= List(1, 2,3,4,5,6, 7,8,9,10)
+val numlist: List [Int] = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+
+scala> numList.filter(num=>{ num%2==0｝ )
+val res68: List[Int] = List(2, 4, 6, 8, 10}
+
+
+
+
+# Can I use foreach and get the same effect of map
+
+Remember foreach does not return value whereas map returns you the value.
+But you can use yield along with for loop to make it behave like map.
+Adding yield to a for loop essentially places the result from each loop iteration into temporary holding area.
+When the loop completes, all the elements in the holding area are returned as a single collection
+
+scala> val result= for(c<- msg) yield c.toUpper
+result: String = HELLO WORLD
+
+scala> val result= for(c<-msg) c.toUpper //without yield
+
+
+
+Assignment:
+
+1. Read a string and convert all uppercase to lowercase and vice-versa
+HelloWorld → hELLO wORLD
+Hint: go character by character, get its Unicode. Check where Unicode falls?
+'A' = 65, 'Z'= 90
+'a'= 97, '2=122
+Difference is 32. If you encountered 65 to 90, then add 32
+If you encounter 97 to 122, then subtract 32.
+For every other case, just return the Unicode as it is
+
+
+2. Read a String and just collect all the numbers (try reading them Byte wise and read the
+Unicode of numbers and filter them). Unicode of 0-9 is 48-57
+
+Hello4World23 => 423
+
+scala> "01 23456789" foreach(c=>println(c.toInt))
+48 49... 57
+
+
+# Regular Expression in String
+
+scala> var msg="your Age is 27, your Salary is 5000"
+msg: String = your Age is 27 your Salary is 5000
+
+From the above message, find out the numbers (27,5000)
+
+scala> val numRegex= "[0-9]+".r
+numRegex: scala.util.matching.Regex = [0-9]+
+
+scala > val firstMatch = numRegex.findFirstIn(msg) //It is returning Some, but we are holding by
+Option
+firstMatch: Option [String] = Some(27)
+
+Note: findFirstIn() returned Some(27) which is assigned to firstMatch variable of
+Option|String type.
+
+What if you had no matching values.
+
+scala> val numRegex2="Hello".r
+numRegex2: scala.util.matching.Regex = Hello
+
+scala > val firstMatch = numRegex2.findFirstIn(msg)
+firstMatch: Option [String] = None
+
+It returned you None.
+
+# Conclusion: -
+If there are more than one matching value, they are all returned as Some.
+But if there is no matching value, you get None.
+
+If a function return type is Option then you can either return Some or None.
+- Some represents 1 or More element
+- None represents 0 element (kind of Null)
+
+Find all numbers
+
+scala> val allMatch = numRegex.findAllIn(msg)
+allMatch: scala.util.matching.Regex.MatchIterator = <iterator>
+
+scala> allMatch.foreach(println)
+27
+5000
+
+scala> allMatch.foreach(println) //Will show you nothing 2nd time as iterator was consumed.
+
+scala > val allMatchList = numRegex.findAllIn(msg).toList
+
+If findAllIn doesn't find any results, an empty iterator is returned, so you can still write your
+code just like that-you don't need to check to see if the result is null.
+If you'd rather have the results as an Array, add the toArray method after the findAllIn call
+
+# Assigning the value to array
+
+scala> val allMatch = numRegex.findAllIn(msg).toArray
+allMatch: Array [String] = Array(27, 5000)
+
+If there are no matches, this approach yields an empty Array. Other methods like toList, toSea,
+and toVector are also available
+
+How many ways to create Regex object?
+2 ways
+1. Using r
+2. Using Regex class
+
+scala> val numRegex= "[0-9]+".r    //using approach 1
+
+scala> import scala.util.matching.Regex    //Using approach 2
+import scala.util.matching.Regex
+
+scala> val numPattern = new Regex("[0-9]+")
+numPattern: scala.util.matching.Regex = [0-9]+
+
+scala > val numPattern2 = new Regex("||d+")
+numPattern2: scala.util.matching.Regex = \d+
+
+scala> val allMatchList = numPattern2.findAllIn(msg).toList
+allMatchList: List[String] = List(4, 23)
+
+# Assignment:
+Explore https://regexr.com/and look into cheat sheets and other helpful stuffs.
+\d+ represent digits
+\s+ represent spaces
+w+ represents words and so on.
+Working with Option.
+Option is a container that holds either zero or one values.
+So, when you try to get value from an Option either you will get 1 value or you will get nothing.
+
+You can use the 3 approaches to work with Option
+1. Call getOrElse on the value.
+2. Use the Option in a foreach loop.
+3. Use the Option in a match expression.
+
+
+# getOr Else
+
+With the getOrElse approach, you attempt to "get" the result,
+while also specifying a default value that should be used if the method failed:
+
+scala> var msg="your Age is 27, your Salary is 5000"
+msg: String = your Age is 27,your Salary is 5000
+
+scala> val regex2= "Hello".r
+scala> val result = regex2.findFirstIn(msg)-getOrElse("no match" )
+result: String = no match
+
+scala> val result = regex2.findFirstIn(msg)-get
+java.util. NoSuchElementException: None.get
+at scala. NoneS.get(Option.scala:349)
+at scala.NoneS.get(Option.scala:347)
+... 27 elided
+
+# Change your regex2
+scala> val regex2= "\\d+".r   \\ \d means digit + means 1 or more
+
+scala> val result = regex2.findFirstIn(msg)-getOrElse("no match" )
+result: String = 27
+
+## Using match expression (Very Important for Interviews too :) )
+scala> val result = regex2.findFirstIn(msg)
+val result: Option[String] = Some(27)
+
+scala>result match {
+case Some(s) => println(s"Found: $s")
+case None => println ("Nothing found")
+
+scala>result match i
+case Some(s) => println(s"Found: $s")
+case None =>
+} //This also works
+
+result match {
+case Some(s) => println(s"Found: $s")
+case _ =>
+} //This also works
+
+# Accessing String at particular Position
+scala> var msg="Hello World"
+msg: String = Hello World
+
+scala> msg.charAt(O)
+res39: Char = H
+
+scala> msg(0)
+res40: Char = H
+
+scala> "Hello World" (0) //Internally gets converted into "Hello World".
+.apply(0)
+res41: Char = H
+
+
+## Assignment:
+Explore String class in Scala and check all possible methods.
+
+Check the API document for all the methods in String class
+
+Find out what are the concepts of String that came in Scala 3.x
+

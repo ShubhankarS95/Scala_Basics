@@ -31,7 +31,7 @@ Otherwise, scala will fail to understand what to inject.
 
 var num1:Int=_ //Works with a warning.
 var num1: Int = 0
-_ is a placeholder which will be filled up with the default value of numi.
+_ is a placeholder which will be filled up with the default value of num1.
 
 The below code however will not work. Keep it inside the class and try to compile the code.
 
@@ -40,15 +40,15 @@ class Demo needs to be abstract, since var num1: Int in class Demo is not define
 
 (Note that variables need to be initialized to be defined)
 
-Note: You cannot use _ concept with the val, As the value is constant and you should assign some
+Note: You cannot use _ concept with the val, As the value is constant, and you should assign some
 value to it, even if the value is 0. It gives you run time error. No compilation issues.
 
 # _ initialization is deprecated.
 
 Solution:
 
-import scala.compil etime.uninitialized
-var numi:int= uninitialized
+import scala.compiletime.uninitialized
+var num1:int= uninitialized
 
 # Object:
 
@@ -109,12 +109,12 @@ var name="Suraz"
 object TestClient{
     def main(args: Array[String])={
         val t= new Test
-        printin(t.name)
+        println(t.name)
     }
 }
 
 Note: Although the file is saved as Demo.scala, It will generate 3 files while compiling
-Test.class TestClient.class TestClientS.class
+Test.class TestClient.class TestClient$.class
 
 # How do we make the main) static? Do we have a static keyword in scala?
 No. We don't have any static keyword in scala.
@@ -139,7 +139,7 @@ Hello Scala
 Singleton Object:
 Scala classes does not have a direct support of static keyword, which means programmer cannot
 define static variable and methods.
-Instead Scala has something called object which is Singleton. Since object is Singleton, Programmer
+Instead, Scala has something called object which is Singleton. Since object is Singleton, Programmer
 cannot create the Object of singleton using new keyword.
 A singleton object is declared by using object keyword instead of a class.
 
@@ -158,13 +158,98 @@ method.
 scala> val d = new Demo()
 d: Demo = Demo@78e17a99
 
-scala> d.sayHello() //cannot call using d.sayHello, since while defining the method, you wrote with
+scala> d.sayHello() //cannot call using d.sayHello, since while defining the method, you wrote with ()
+
 Hello Suraj
 scala > d.name="Scala"
 d.name: String = Scala
 
 scala > d.sayHello()
 Hello Scala
+
+
+# Object and Inheritance:
+
+Object can inherit classes and trait as class does.
+
+scala> class B
+defined class B
+
+scala> trait C
+defined trait C
+
+object A extends B with C{
+}
+
+Internally, Scala will create an Anonymous class (We don't know its name and it's not
+accessible). That anonymous class will internally extends B with C. Then scala creates a
+single instance/object of that class and assigns it to A. Hence A is object of that anonymous
+class that extends B with C.
+
+# Companion class and Companion object.
+Companion means friends together.
+When you have a class with same name as singleton object, it is called companion class and the
+singleton object is called companion object.
+
+The companion class and its companion object both must be defined in the same source file.
+Create a file Companion.scala with the below code
+
+class Companion
+{
+  var num1 = 10
+  def print(): Unit ={
+      println(s"From Companion class num1=$num1 num2=${Companion.num2}")
+  }
+}
+
+
+object Companion {
+  var num2 = 20
+  def main(args: Array[String]): Unit = {
+    var obj = new Companion()
+    println(s"From Companion Object num1=${obj.num1} num2=$num2")
+    obj.print()
+  }
+}
+
+
+# Compile and Execute
+cmd>scalac Companion.scala
+cmd>scala Companion
+From Companion Object num1=10 num2=20
+From Companion class num1=10 num2=20
+
+
+Note: In the companion object, we accessed num1 of Companion class through the instance as main
+is static and static cannot access non-static member directly. Moreover, it is not an inheritance so
+you will never have a direct way of accessing elements between this classes and objects.
+
+
+## Difference between class and object:
+
+We can instantiate a class by using a new keyword. In this process we can pass parameter to it.
+We cannot instantiate a Singleton object using new keyword, so it cannot take parameters. A
+singleton object is initialized the first time some code accesses it.
+
+In a single file, there can be a class and object with the same name. In such case we call them
+Companion class and object.
+
+In case the class and object name are not same, they are called as standalone class and object.
+
+There is a relationship between object and class. An object is said to be the companion-object of a
+class if they share the same name. When this happens, each has access to methods of private
+visibility in the other. These methods are not automatically imported, though. You either have to
+import them explicitly, or prefix them with the class/object name.
+
+Why to have companion class and object?
+Assume we have class Employee, we want to have few non-static methods and few utility methods.
+
+Will it help me in Garbage collection optimization:
+Yes.
+
+
+
+
 
 
 
